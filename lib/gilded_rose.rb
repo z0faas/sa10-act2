@@ -7,7 +7,23 @@ class GildedRose
     @quality = quality
   end
 
+  def normal_tick
+    if quality != 0
+      if @days_remaining > 0 # before sell date
+        @quality -= 1
+      end
+      if @days_remaining <= 0 # on sell date
+        @quality -= 2
+      end
+    end
+    @days_remaining -= 1
+  end
+
   def tick
+    if name == 'Normal Item' # do nothing if the item is normal
+      return
+    end
+
     if @name != "Aged Brie" and @name != "Backstage passes to a TAFKAL80ETC concert"
       if @quality > 0
         if @name != "Sulfuras, Hand of Ragnaros"
